@@ -1,7 +1,14 @@
 {% extends 'main/base.html' %}
 
+{% load static %}
+
+{% block script %}
+    <script src="{% static 'main/index.js' %}"></script>
+{% endblock script %}
+
 {% block bodyblock %}
     <div class="container jumbotron">
         <h3>Url Shortener!</h3>
+        <form action=""></form>
     </div>
 {% endblock bodyblock %}
