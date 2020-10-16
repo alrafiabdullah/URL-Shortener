@@ -4,11 +4,17 @@
 
 {% block script %}
     <script src="{% static 'main/index.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock script %}
 
 {% block bodyblock %}
     <div class="container jumbotron">
         <h3>Url Shortener!</h3>
-        <form action=""></form>
+        <form id="mainForm">
+            {% csrf_token %}
+            <input class="form-control" type="url" id="mainURL" placeholder="Enter your URL" autofocus required>
+            <input class="btn btn-primary" type="submit">
+        </form>
+        <div class="processed"></div>
     </div>
 {% endblock bodyblock %}
