@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Loaded!");
-
   const mainForm = document.querySelector("#mainForm");
   const processed = document.querySelector(".processed");
 
@@ -8,27 +6,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   mainForm.addEventListener("submit", function (e) {
     e.preventDefault();
-    console.log("Clicked!");
+    processed.style.display = "none";
 
     let csrfToken = $("input[name=csrfmiddlewaretoken]").val();
+
     $.ajax({
       type: "POST",
       url: "/process",
       data: {
         mainURL: $("#mainURL").val(),
+        choice: $("#shortener").val(),
         csrfmiddlewaretoken: csrfToken,
         credentials: "include",
       },
 
       success: function (response) {
-        console.log(response);
-
         processed.style.display = "block";
 
-        processed.innerHTML = `
-            <h5>Your processed link is ready!</h5>
-            <a href="${response.message}">${response.message}</a>
-        `;
+        if (response.message === "failed") {
+          processed.innerHTML = `
+              <h5 class="alert alert-danger">Please enter a GitHub link and try again!</h5>
+          `;
+        } else {
+          processed.innerHTML = `
+              <div class="alert alert-success">
+                <h5>Your processed link is ready!</h5>
+                <a target="_blank" href="${response.message}">${response.message}</a><span>(Opens in a new window)</span>
+              </div>
+          `;
+        }
       },
 
       error: function (err) {

@@ -12,7 +12,15 @@
         <h3>Url Shortener!</h3>
         <form id="mainForm">
             {% csrf_token %}
-            <input class="form-control" type="url" id="mainURL" placeholder="Enter your URL" autofocus required>
+            <label for="shortener">Shortener List</label>
+            <input class="form-control col-md-3" list="shorteners" id="shortener" autofocus required>
+            <datalist id="shorteners">
+                <option value="Git.io">
+                <option value="TinyURL.com">
+                <option value="NullPointer">
+                <option value="Os.db">
+            </datalist>
+            <input class="form-control" type="url" id="mainURL" placeholder="Enter your URL" required>
             <input class="btn btn-primary" type="submit">
         </form>
         <div class="processed"></div>
