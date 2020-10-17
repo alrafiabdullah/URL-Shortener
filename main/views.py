@@ -43,8 +43,6 @@ def shortURL_process(request):
         mainURL = request.POST["mainURL"]
         choice = request.POST["choice"]
 
-        print(str(mainURL))
-
         shortener = pyshorteners.Shortener()
 
         if str(choice) == "TinyURL.com":
