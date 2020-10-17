@@ -9,7 +9,11 @@
 
 {% block bodyblock %}
     <div class="container jumbotron">
-        <h3>Url Shortener!</h3>
+        <div style="text-align: center; margin: 5%;">
+            <h3>Url Shortener</h3>
+            <button class="btn btn-primary" id="shorten">Shorten URL</button>
+            <button class="btn btn-primary" id="expand">Expand URL</button>
+        </div>
         <form id="mainForm">
             {% csrf_token %}
             <label for="shortener">Shortener List</label>
@@ -20,7 +24,21 @@
                 <option value="NullPointer">
                 <option value="Os.db">
             </datalist>
-            <input class="form-control" type="url" id="mainURL" placeholder="Enter your URL" required>
+            <small>For Git.io please enter a GitHub link</small>
+            <input class="form-control" type="url" id="mainURL" placeholder="Enter your long URL" required>
+            <input class="btn btn-primary" type="submit">
+        </form>
+        <form id="expandForm">
+            {% csrf_token %}
+            <label for="expand">Expand List</label>
+            <input class="form-control col-md-3" list="expands" id="expand" autofocus required>
+            <datalist id="expands">
+                <option value="Git.io">
+                <option value="TinyURL.com">
+                <option value="NullPointer">
+                <option value="Os.db">
+            </datalist>
+            <input class="form-control" type="url" id="shortURL" placeholder="Enter your shortened URL" required>
             <input class="btn btn-primary" type="submit">
         </form>
         <div class="processed"></div>

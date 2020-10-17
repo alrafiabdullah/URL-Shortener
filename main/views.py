@@ -14,7 +14,7 @@ def index(request):
     csrf_token = get_token(request)
     return render(request, "main/index.html")
 
-def url_process(request):
+def longURL_process(request):
     time.sleep(3)
     if request.method == "POST":
         mainURL = request.POST["mainURL"]
@@ -33,7 +33,32 @@ def url_process(request):
             except:
                 processed_url = "failed"
 
-# 
+    return JsonResponse({
+        'message': processed_url
+    }, content_type="application/json", status=200)
+
+def shortURL_process(request):
+    time.sleep(3)
+    if request.method == "POST":
+        mainURL = request.POST["mainURL"]
+        choice = request.POST["choice"]
+
+        print(str(mainURL))
+
+        shortener = pyshorteners.Shortener()
+
+        if str(choice) == "TinyURL.com":
+            processed_url = shortener.tinyurl.expand(mainURL)
+        elif str(choice) == "NullPointer":
+            processed_url = shortener.nullpointer.expand(mainURL)
+        elif str(choice) == "Os.db":
+            processed_url = shortener.osdb.expand(mainURL)
+        else:
+            try:
+                processed_url = shortener.gitio.expand(mainURL)        
+            except:
+                processed_url = "failed"
+
     return JsonResponse({
         'message': processed_url
     }, content_type="application/json", status=200)
