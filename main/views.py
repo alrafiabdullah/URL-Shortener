@@ -1,7 +1,7 @@
 import pyshorteners
 import time
-import requests
-import json
+import pyperclip
+
 
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -36,4 +36,14 @@ def url_process(request):
 # 
     return JsonResponse({
         'message': processed_url
+    }, content_type="application/json", status=200)
+
+def copy_process(request):
+    if request.method == "POST":
+        mainURL = request.POST["mainURL"]
+
+        pyperclip.copy(mainURL)
+ 
+    return JsonResponse({
+        'message': "processed_url"
     }, content_type="application/json", status=200)

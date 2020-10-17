@@ -31,9 +31,39 @@ document.addEventListener("DOMContentLoaded", () => {
           processed.innerHTML = `
               <div class="alert alert-success">
                 <h5>Your processed link is ready!</h5>
-                <a target="_blank" href="${response.message}">${response.message}</a><span>(Opens in a new window)</span>
+                <a id="shortened" target="_blank" href="${response.message}">${response.message}</a><span> (Opens in a new window)</span>
+                <button class="btn btn-info" id="copy">Copy Link</button>
               </div>
           `;
+          const copyButton = document.querySelector("#copy");
+
+          $("#copy").click(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+              type: "POST",
+              url: "/copy",
+              data: {
+                mainURL: `${response.message}`,
+                csrfmiddlewaretoken: csrfToken,
+                credentials: "include",
+              },
+
+              success: function (response) {
+                const newDiv = document.createElement("div");
+                newDiv.innerHTML = `
+                  <div class="alert alert-info">
+                    <h3>The URL has been copied to your clipboard!</h3>
+                  </div>
+                `;
+                processed.append(newDiv);
+              },
+
+              error: function (err) {
+                console.log(JSON.stringify(err));
+              },
+            });
+          });
         }
       },
 
